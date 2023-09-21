@@ -10,10 +10,10 @@ export default () => {
     setLocale({
         mixed: {
             default: 'fieldInvalid',
-            url: {
-                url: () => ({ key: 'invalidURL' }),
-                test: ({ val }) => ({ key: 'alreadyInURLs', values: { val } })
-            }
+        },
+        string: {
+            url: () => ({ key: 'invalidURL' }),
+            alreadyInURLs: ({ val }) => ({ key: 'alreadyInURLs', values: { val } })
         }
     })
     
@@ -55,6 +55,7 @@ export default () => {
             watchedState.formState = 'valid';
         })
         .catch((error) => {
+            console.log(error.errors)
             watchedState.error = error.message;
             watchedState.formState = 'invalid';
         })

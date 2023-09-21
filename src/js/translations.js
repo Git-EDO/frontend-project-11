@@ -5,7 +5,7 @@ const lead = document.querySelector('.lead');
 const label = document.querySelector('.form-label');
 const submitBtn = document.querySelector('.btn[type="submit"]');
 const example = document.querySelector('.example-text');
-const feedback = document.querySelector('.feedback');
+// const feedback = document.querySelector('.feedback');
 
 export default () => {
     i18next.init({
