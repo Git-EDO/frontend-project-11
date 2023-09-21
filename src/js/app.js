@@ -1,27 +1,10 @@
 import onChange from 'on-change';
-import  { object, string, setLocale } from 'yup';
+import { string, setLocale } from 'yup';
 import { changeFormState, hideError, showError } from './view';
-import i18n from './translations';
 
 export default () => {
     const input = document.getElementById('url-input');
     const form = document.querySelector('form');
-
-    setLocale({
-        mixed: {
-            default: 'fieldInvalid',
-        },
-        string: {
-            url: () => ({ key: 'invalidURL' }),
-            alreadyInURLs: ({ val }) => ({ key: 'alreadyInURLs', values: { val } })
-        }
-    })
-    
-    const schema = object({
-        url: string().url().test('alreadyInURLs', '', () => {
-            return watchedState.URLs.indexOf(watchedState.inputValue) === -1
-        })
-    });
     
     const state = {
         formState: 'valid',
@@ -39,6 +22,17 @@ export default () => {
             value ? showError(value) : hideError()
         }
     });
+
+    setLocale({
+        mixed: {
+            notOneOf: 'alreadyInURLs'
+        },
+        string: {
+            url: () => 'invalidURL'
+        }
+    })
+    
+    const urlSchema = string().url().notOneOf(watchedState.URLs)
     
     input.addEventListener('input', (e) => {
         watchedState.inputValue = e.target.value;
@@ -46,16 +40,13 @@ export default () => {
     });
 
     const inputValidation = (value) => {
-        const url = { url: value };
-
-        schema
-        .validate(url)
+        urlSchema
+        .validate(value)
         .then(() => {
             watchedState.error = '';
             watchedState.formState = 'valid';
         })
         .catch((error) => {
-            console.log(error.errors)
             watchedState.error = error.message;
             watchedState.formState = 'invalid';
         })
@@ -64,6 +55,4 @@ export default () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault()
     });
-    
-    i18n();
 }

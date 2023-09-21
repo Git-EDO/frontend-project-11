@@ -1,6 +1,11 @@
+import i18n from "./translations";
+const h1 = document.querySelector('h1');
+const lead = document.querySelector('.lead');
+const label = document.querySelector('.form-label');
+const submitBtn = document.querySelector('.btn[type="submit"]');
+const example = document.querySelector('.example-text');
 const form = document.querySelector('form');
 const input = document.getElementById('url-input');
-const submitBtn = document.querySelector('.btn[type="submit"]');
 const feedback = document.querySelector('.feedback');
 
 export const changeFormState = (state) => {
@@ -28,7 +33,15 @@ export const changeFormState = (state) => {
 };
 
 export const showError = (errorMessage) => {
-    feedback.textContent = errorMessage;
+    feedback.textContent = i18n.t('errors.' + errorMessage);
 };
 
-export const hideError = () => feedback.textContent = ''
+export const hideError = () => feedback.textContent = '';
+
+i18n.init().then((t) => {
+    h1.textContent = t('h1');
+    lead.textContent = t('lead');
+    label.textContent = t('label');
+    submitBtn.textContent = t('submitBtn');
+    example.textContent = t('example');
+})
