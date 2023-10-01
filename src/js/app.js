@@ -28,7 +28,6 @@ export default () => {
             value ? showError(value) : hideError();
         }
         if (path === 'inputValue') {
-            console.log(value)
             inputValidation(value, watchedState.RSSlist);
         }
         if (path === 'RSSlist') {
@@ -58,7 +57,6 @@ export default () => {
         }
     });
     
-    
     input.addEventListener('input', (e) => watchedState.inputValue = e.target.value);
     
     const inputValidation = (value, list) => {
@@ -82,6 +80,7 @@ export default () => {
         const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
         axios.get(proxy)
             .then((response) => {
+                watchedState.formState = 'success';
                 const xml = response.data.contents;
                 const html = parse(xml);
                 const feed = getFeed(html);
@@ -89,7 +88,6 @@ export default () => {
                 watchedState.feeds.push(feed);
                 watchedState.posts = [...watchedState.posts, ...posts];
                 watchedState.RSSlist.push(rss);
-                watchedState.formState = 'success';
             })
             .catch((e) => {
                 watchedState.formState = 'valid';
