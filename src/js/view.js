@@ -50,7 +50,8 @@ export const showError = (errorKey) => {
 };
 
 export const showSuccessMessage = () => {
-    feedback.textContent = i18n.t('successMessage');
+    feedback.textContent = 'RSS успешно загружен';
+    // feedback.textContent = i18n.t('successMessage');
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
 };
@@ -85,13 +86,16 @@ export const renderFeeds = (feeds) => {
     })
 }
 
-export const renderPosts = (posts) => {
+export const renderPosts = (posts, visited) => {
     postsList.innerHTML = '';
     postsTitle.textContent = i18n.t('postsTitle');
     posts.forEach((feed) => {
         const li = document.createElement('li');
         li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
         const a = document.createElement('a');
+        if (visited.some((p) => p.title === feed.title)) {
+            a.classList.add('fw-normal', 'link-secondary');
+        }
         a.classList.add('fw-bold');
         a.target = '_blank';
         a.rel = 'noopener';

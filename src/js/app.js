@@ -37,7 +37,7 @@ export default () => {
             renderFeeds(value);
         }
         if (path === 'posts') {
-            renderPosts(value);
+            renderPosts(value, watchedState.visitedPosts);
         }
         if (path === 'postInModal') {
             renderPostInModal(value)
