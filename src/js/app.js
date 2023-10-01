@@ -78,7 +78,7 @@ export default () => {
         watchedState.formState = 'sending';
         const rss = watchedState.inputValue;
         const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
-        axios.get(proxy)
+        axios.get(proxy, { timeout: 5000 })
             .then((response) => {
                 watchedState.formState = 'success';
                 const xml = response.data.contents;
