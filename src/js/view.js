@@ -43,14 +43,14 @@ export const changeFormState = (state) => {
             input.setAttribute('disabled', true);
             break
         case 'success':
+            feedback.textContent = i18n.t('successMessage');
+            feedback.classList.remove('text-danger');
+            feedback.classList.add('text-success');
             form.reset();
             input.focus();
             submitBtn.removeAttribute('disabled');
             input.removeAttribute('disabled');
             input.classList.remove('is-valid');
-            feedback.textContent = i18n.t('successMessage');
-            feedback.classList.remove('text-danger');
-            feedback.classList.add('text-success');
             break
         default:
             console.log(`${state} is unsupported form state`)
