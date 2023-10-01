@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap w/ Webpack</title>
+    <title>RSS агрегатор</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
@@ -15,8 +15,8 @@
               <form action class="rss-form text-body">
                 <div class="row">
                   <div class="col">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" id="url-input" name="url" required>
+                    <div class="form-floating"> 
+                      <input type="text" class="form-control" id="url-input" placeholder=" " name="url" required>
                       <label for="url-input" class="form-label"></label>
                     </div>
                   </div>
@@ -30,13 +30,44 @@
           </div>
         </div>
       </section>
-      <section class="container-fluid container-xxl p-5">
+      <section id="rss-content" class="container-fluid container-xxl p-5">
         <div class="row">
-          <div class="col-md-10 col-lg-8 order-1 mx-auto posts"></div>
-          <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"></div>
+          <div class="col-md-10 col-lg-8 order-1 mx-auto posts">
+            <div class="card border-0">
+              <div class="card-body">
+                <h2 class="card-title h4"></h2>
+              </div>
+              <ul class="list-group border-0 rounded-0"></ul>
+            </div>
+          </div>
+          <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds">
+            <div class="card border-0">
+              <div class="card-body">
+                <h2 class="card-title h4"></h2>
+              </div>
+              <ul class="list-group border-0 rounded-0"></ul>
+            </div>
+          </div>
         </div>
       </section>
     </main>
+    <div class="modal fade" tabindex="-1" id="postModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-primary" target="_blank"></a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"></button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="./main.js"></script>
   </body>
 </html>
