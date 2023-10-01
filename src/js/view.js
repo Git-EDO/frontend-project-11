@@ -18,12 +18,6 @@ const modalSecondaryBtn = document.querySelector('#postModal .btn-secondary');
 
 export const changeFormState = (state) => {
     switch (state) {
-        case 'filling':
-            submitBtn.removeAttribute('disabled');
-            input.removeAttribute('disabled');
-            form.reset();
-            input.focus();
-            break
         case 'invalid':
             submitBtn.setAttribute('disabled', true);
             input.classList.add('is-invalid');
@@ -38,6 +32,16 @@ export const changeFormState = (state) => {
             submitBtn.setAttribute('disabled', true);
             input.setAttribute('disabled', true);
             break
+        case 'success':
+            form.reset();
+            input.focus();
+            submitBtn.removeAttribute('disabled');
+            input.removeAttribute('disabled');
+            input.classList.remove('is-valid');
+            feedback.textContent = i18n.t('successMessage');
+            feedback.classList.remove('text-danger');
+            feedback.classList.add('text-success');
+            break
         default:
             console.log(`${state} is unsupported form state`)
     }
@@ -47,13 +51,6 @@ export const showError = (errorKey) => {
     feedback.textContent = i18n.t('errors.' + errorKey);
     feedback.classList.remove('text-success');
     feedback.classList.add('text-danger');
-};
-
-export const showSuccessMessage = () => {
-    feedback.textContent = 'RSS успешно загружен';
-    // feedback.textContent = i18n.t('successMessage');
-    feedback.classList.remove('text-danger');
-    feedback.classList.add('text-success');
 };
 
 export const hideError = () => feedback.textContent = '';

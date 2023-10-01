@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import axios from 'axios';
 import { string, setLocale } from 'yup';
-import { changeFormState, hideError, renderFeeds, renderPosts, showError, renderPostInModal, markPostsAsVisited, showSuccessMessage } from './view';
+import { changeFormState, hideError, renderFeeds, renderPosts, showError, renderPostInModal, markPostsAsVisited } from './view';
 import { parse, getFeed, getPosts } from './parser/parser';
 
 export default () => {
@@ -10,7 +10,7 @@ export default () => {
     const postModal = document.getElementById('postModal');
     
     const state = {
-        formState: 'valid',
+        formState: '',
         inputValue: '',
         error: '',
         RSSlist: [],
@@ -28,7 +28,7 @@ export default () => {
             value ? showError(value) : hideError();
         }
         if (path === 'inputValue') {
-            inputValidation(value);
+            inputValidation(value, watchedState.RSSlist);
         }
         if (path === 'RSSlist') {
             checkRSSupdates();
@@ -57,11 +57,11 @@ export default () => {
         }
     });
     
-    const urlSchema = string().url().notOneOf(watchedState.RSSlist).required();
     
     input.addEventListener('input', (e) => watchedState.inputValue = e.target.value);
-
-    const inputValidation = (value) => {
+    
+    const inputValidation = (value, list) => {
+        const urlSchema = string().url().notOneOf(list).required();
         urlSchema
         .validate(value)
         .then(() => {
@@ -88,8 +88,7 @@ export default () => {
                 watchedState.feeds.push(feed);
                 watchedState.posts = [...watchedState.posts, ...posts];
                 watchedState.RSSlist.push(rss);
-                watchedState.formState = 'filling';
-                showSuccessMessage();
+                watchedState.formState = 'success';
             })
             .catch((e) => {
                 watchedState.formState = 'valid';
