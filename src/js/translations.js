@@ -12,7 +12,7 @@ const i18n = i18next.createInstance({
                 submitBtn: 'Добавить',
                 example: 'Пример: https://ru.hexlet.io/lessons.rss',
                 errors: {
-                    alreadyInURLs: 'RSS уже существует',
+                    alreadyInRSSlist: 'RSS уже существует',
                     invalidURL: 'Ссылка должна быть валидным URL',
                     isRequired: 'Не должно быть пустым',
                     invalidRSS: 'Ресурс не содержит валидный RSS',

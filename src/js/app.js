@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import axios from 'axios';
 import { string, setLocale } from 'yup';
-import { changeFormState, hideError, renderFeeds, renderPosts, showError, renderPostInModal, markPostsAsVisited } from './view';
+import { changeFormState, hideError, renderFeeds, renderPosts, showError, renderPostInModal, markPostsAsVisited, showSuccessMessage } from './view';
 import { parse, getFeed, getPosts } from './parser/parser';
 
 export default () => {
@@ -49,7 +49,7 @@ export default () => {
 
     setLocale({
         mixed: {
-            notOneOf: 'alreadyInURLs',
+            notOneOf: 'alreadyInRSSlist',
             required: 'isRequired'
         },
         string: {
@@ -89,6 +89,7 @@ export default () => {
                 watchedState.posts = [...watchedState.posts, ...posts];
                 watchedState.RSSlist.push(rss);
                 watchedState.formState = 'filling';
+                showSuccessMessage();
             })
             .catch((e) => {
                 watchedState.formState = 'valid';
