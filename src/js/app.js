@@ -1,4 +1,3 @@
-import i18n from './translations';
 import onChange from 'on-change';
 import axios from 'axios';
 import { string, setLocale } from 'yup';
@@ -6,26 +5,9 @@ import { changeFormState, hideError, renderFeeds, renderPosts, showError, render
 import { parse, getFeed, getPosts } from './parser/parser';
 
 export default () => {
-    const h1 = document.querySelector('h1');
-    const lead = document.querySelector('.lead');
-    const label = document.querySelector('.form-label');
-    const example = document.querySelector('.example-text');
-    const modalSecondaryBtn = document.querySelector('#postModal .btn-secondary');
-    const modalPrimaryBtn = document.querySelector('#postModal .btn-primary');
-    const submitBtn = document.querySelector('.btn[type="submit"]');
-    i18n.init().then((t) => {
-        h1.textContent = t('h1');
-        lead.textContent = t('lead');
-        label.textContent = t('label');
-        submitBtn.textContent = t('submitBtn');
-        example.textContent = t('example');
-        modalPrimaryBtn.textContent = t('modal.primary');
-        modalSecondaryBtn.textContent = t('modal.secondary');
-    })
     const input = document.getElementById('url-input');
     const form = document.querySelector('form');
     const postModal = document.getElementById('postModal');
-
     
     const state = {
         formState: '',
@@ -46,6 +28,7 @@ export default () => {
             value ? showError(value) : hideError();
         }
         if (path === 'inputValue') {
+            console.log(watchedState.RSSlist)
             inputValidation(value, watchedState.RSSlist);
         }
         if (path === 'RSSlist') {

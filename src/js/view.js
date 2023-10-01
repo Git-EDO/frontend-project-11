@@ -16,7 +16,15 @@ const modalBody = document.querySelector('#postModal .modal-body');
 const modalPrimaryBtn = document.querySelector('#postModal .btn-primary');
 const modalSecondaryBtn = document.querySelector('#postModal .btn-secondary');
 
-
+i18n.init().then((t) => {
+    h1.textContent = t('h1');
+    lead.textContent = t('lead');
+    label.textContent = t('label');
+    submitBtn.textContent = t('submitBtn');
+    example.textContent = t('example');
+    modalPrimaryBtn.textContent = t('modal.primary');
+    modalSecondaryBtn.textContent = t('modal.secondary');
+})
 
 export const changeFormState = (state) => {
     switch (state) {
