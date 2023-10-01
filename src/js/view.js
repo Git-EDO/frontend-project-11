@@ -31,6 +31,7 @@ export const changeFormState = (state) => {
         case 'valid':
             input.classList.remove('is-invalid');
             input.classList.add('is-valid');
+            input.removeAttribute('disabled');
             submitBtn.removeAttribute('disabled');
             break
         case 'sending':
