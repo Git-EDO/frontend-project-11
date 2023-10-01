@@ -28,6 +28,7 @@ export default () => {
             value ? showError(value) : hideError();
         }
         if (path === 'inputValue') {
+            console.log(value)
             inputValidation(value, watchedState.RSSlist);
         }
         if (path === 'RSSlist') {
