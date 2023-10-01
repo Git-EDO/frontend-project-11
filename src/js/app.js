@@ -136,5 +136,5 @@ export default () => {
         const activePost = watchedState.posts.find((post) => post.title === target);
         watchedState.visitedPosts.push(activePost);
         watchedState.postInModal = activePost;
-    })
+    });
 }
