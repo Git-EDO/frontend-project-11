@@ -27,9 +27,9 @@ export default () => {
         if (path === 'error') {
             value ? showError(value) : hideError();
         }
-        if (path === 'inputValue') {
-            inputValidation(value, watchedState.RSSlist);
-        }
+        // if (path === 'inputValue') {
+        //     inputValidation(value, watchedState.RSSlist);
+        // }
         if (path === 'RSSlist') {
             checkRSSupdates();
         }
@@ -57,7 +57,10 @@ export default () => {
         }
     });
     
-    input.addEventListener('input', (e) => watchedState.inputValue = e.target.value);
+    input.addEventListener('input', (e) => {
+        watchedState.inputValue = e.target.value;
+        inputValidation(watchedState.inputValue, watchedState.RSSlist);
+    });
     
     const inputValidation = (value, list) => {
         const urlSchema = string().url().notOneOf(list).required();

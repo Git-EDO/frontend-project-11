@@ -47,7 +47,6 @@ export const changeFormState = (state) => {
             feedback.classList.remove('text-danger');
             feedback.classList.add('text-success');
             form.reset();
-            input.focus();
             submitBtn.removeAttribute('disabled');
             input.removeAttribute('disabled');
             input.classList.remove('is-valid');
