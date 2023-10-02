@@ -43,7 +43,8 @@ export const changeFormState = (state) => {
             input.setAttribute('disabled', true);
             break
         case 'success':
-            feedback.textContent = i18n.t('successMessage');
+            feedback.textContent = 'RSS успешно загружен';
+            // feedback.textContent = i18n.t('successMessage');
             feedback.classList.remove('text-danger');
             feedback.classList.add('text-success');
             form.reset();
