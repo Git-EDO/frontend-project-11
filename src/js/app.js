@@ -44,9 +44,9 @@ export default () => {
       }
       hideError();
     }
-    if (path === 'RSSlist') {
-      checkRSSupdates(value);
-    }
+    // if (path === 'RSSlist') {
+    //   checkRSSupdates(value);
+    // }
     if (path === 'feeds') {
       renderFeeds(value);
     }
@@ -60,24 +60,6 @@ export default () => {
       markPostsAsVisited(value);
     }
   });
-
-  const checkRSSupdates = (rssList) => {
-    const requests = rssList.map((rss) => {
-      const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
-      return axios.get(proxy)
-        .then((response) => {
-          const xml = response.data.contents;
-          const html = parse(xml);
-          const newPosts = getNewPosts(html, watchedState.posts);
-          newPosts.forEach((post) => watchedState.posts.push(post));
-        })
-        .catch(() => {
-          watchedState.error = 'networkError';
-        });
-    });
-
-    Promise.all(requests).then(() => setTimeout(checkRSSupdates, 5000));
-  };
 
   setLocale({
     mixed: {
@@ -108,6 +90,24 @@ export default () => {
     inputValidation(watchedState.inputValue, watchedState.RSSlist);
   });
 
+  const checkRSSupdates = (rssList) => {
+    const requests = rssList.map((rss) => {
+      const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
+      return axios.get(proxy)
+        .then((response) => {
+          const xml = response.data.contents;
+          const html = parse(xml);
+          const newPosts = getNewPosts(html, watchedState.posts);
+          newPosts.forEach((post) => watchedState.posts.push(post));
+        })
+        .catch(() => {
+          watchedState.error = 'networkError';
+        });
+    });
+
+    Promise.all(requests).then(() => setTimeout(checkRSSupdates, 5000));
+  };
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (watchedState.formState !== 'valid') return;
@@ -124,6 +124,7 @@ export default () => {
         watchedState.posts = [...watchedState.posts, ...posts];
         watchedState.RSSlist.push(rss);
         watchedState.formState = 'success';
+        checkRSSupdates(watchedState.RSSlist);
       })
       .catch((error) => {
         watchedState.formState = 'valid';
