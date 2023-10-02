@@ -1,9 +1,8 @@
 const path = require('path')
 
-mode: process.env.NODE_ENV || 'development';
-
 module.exports = {
-   entry: './src/js/main.js',
+  mode: process.env.NODE_ENV || 'development',
+  entry: './src/js/main.js',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
