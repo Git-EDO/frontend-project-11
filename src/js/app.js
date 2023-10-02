@@ -102,9 +102,9 @@ export default () => {
         watchedState.RSSlist.push(rss);
         watchedState.formState = 'success';
       })
-      .catch(() => {
+      .catch((error) => {
         watchedState.formState = 'valid';
-        if (e.request) {
+        if (error.request) {
           watchedState.error = 'networkError';
           return;
         }
