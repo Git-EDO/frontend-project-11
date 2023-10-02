@@ -1,10 +1,8 @@
-// Import our custom CSS
-import '../scss/styles.scss'
+import '../scss/styles.scss';
 
-// Import all of Bootstrap's JS
-import * as bootstrap from 'bootstrap'
+// eslint-disable-next-line no-unused-vars
+import * as bootstrap from 'bootstrap';
 
-// Validation
-import app from './app.js'
+import app from './app';
 
-app()
+app();
