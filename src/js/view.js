@@ -24,7 +24,7 @@ i18n.init().then((t) => {
     example.textContent = t('example');
     modalPrimaryBtn.textContent = t('modal.primary');
     modalSecondaryBtn.textContent = t('modal.secondary');
-})
+});
 
 export const changeFormState = (state) => {
     switch (state) {
@@ -43,8 +43,7 @@ export const changeFormState = (state) => {
             input.setAttribute('disabled', true);
             break
         case 'success':
-            feedback.textContent = 'RSS успешно загружен';
-            // feedback.textContent = i18n.t('successMessage');
+            feedback.textContent = i18n.t('successMessage');
             feedback.classList.remove('text-danger');
             feedback.classList.add('text-success');
             form.reset();
@@ -82,7 +81,7 @@ export const renderFeeds = (feeds) => {
         li.append(p);
         feedsList.append(li);
     })
-}
+};
 
 export const renderPosts = (posts, visited) => {
     postsList.innerHTML = '';
@@ -111,14 +110,14 @@ export const renderPosts = (posts, visited) => {
         li.append(button);
         postsList.append(li);
     })
-}
+};
 
 export const renderPostInModal = (post) => {
     const { title, description, link } = post
     modalTitle.textContent = title
     modalBody.textContent = description
     modalPrimaryBtn.href = link
-}
+};
 
 export const markPostsAsVisited = (posts) => {
     posts.forEach((post) => {
@@ -128,5 +127,5 @@ export const markPostsAsVisited = (posts) => {
             visited.classList.add('fw-normal', 'link-secondary');
         }
     })
-}
+};
 
