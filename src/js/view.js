@@ -29,26 +29,26 @@ i18n.init().then((t) => {
 export const changeFormState = (state) => {
     switch (state) {
         case 'invalid':
-            submitBtn.setAttribute('disabled', true);
+            // submitBtn.setAttribute('disabled', true);
             input.classList.add('is-invalid');
             break
         case 'valid':
             input.classList.remove('is-invalid');
             input.classList.add('is-valid');
-            input.removeAttribute('disabled');
-            submitBtn.removeAttribute('disabled');
+            // input.removeAttribute('disabled');
+            // submitBtn.removeAttribute('disabled');
             break
         case 'sending':
-            submitBtn.setAttribute('disabled', true);
-            input.setAttribute('disabled', true);
+            // submitBtn.setAttribute('disabled', true);
+            // input.setAttribute('disabled', true);
             break
         case 'success':
             feedback.textContent = i18n.t('successMessage');
             feedback.classList.remove('text-danger');
             feedback.classList.add('text-success');
             form.reset();
-            submitBtn.removeAttribute('disabled');
-            input.removeAttribute('disabled');
+            // submitBtn.removeAttribute('disabled');
+            // input.removeAttribute('disabled');
             input.classList.remove('is-valid');
             break
         default:
