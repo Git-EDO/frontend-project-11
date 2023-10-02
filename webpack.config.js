@@ -1,7 +1,9 @@
 const path = require('path')
 
+mode: process.env.NODE_ENV || 'development';
+
 module.exports = {
-  entry: './src/js/main.js',
+   entry: './src/js/main.js',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
@@ -10,6 +12,9 @@ module.exports = {
     static: path.resolve(__dirname, 'dist'),
     port: 8080,
     hot: true
+  },
+  performance: {
+    hints: false,
   },
   module: {
     rules: [
