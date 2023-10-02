@@ -11,6 +11,17 @@ export const getPosts = (data) => Array.from(data.querySelectorAll('channel item
   return { title, description, link };
 });
 
+export const getNewPosts = (html, existingPosts) => {
+  const posts = getPosts(html);
+  const newPosts = [];
+  posts.forEach((post) => {
+    if (!existingPosts.some((p) => p.title === post.title)) {
+      newPosts.push(post);
+    }
+  });
+  return newPosts;
+};
+
 export const parse = (xml) => {
   const parser = new DOMParser();
   return parser.parseFromString(xml, 'application/xml');

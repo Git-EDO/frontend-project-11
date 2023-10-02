@@ -10,7 +10,12 @@ import {
   renderPostInModal,
   markPostsAsVisited,
 } from './view';
-import { parse, getFeed, getPosts } from './parser/parser';
+import {
+  parse,
+  getFeed,
+  getPosts,
+  getNewPosts,
+} from './parser/parser';
 
 export default () => {
   const input = document.getElementById('url-input');
@@ -40,7 +45,7 @@ export default () => {
       hideError();
     }
     if (path === 'RSSlist') {
-      checkRSSupdates();
+      checkRSSupdates(value);
     }
     if (path === 'feeds') {
       renderFeeds(value);
@@ -55,6 +60,24 @@ export default () => {
       markPostsAsVisited(value);
     }
   });
+
+  const checkRSSupdates = (rssList) => {
+    const requests = rssList.map((rss) => {
+      const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
+      return axios.get(proxy)
+        .then((response) => {
+          const xml = response.data.contents;
+          const html = parse(xml);
+          const newPosts = getNewPosts(html, watchedState.posts);
+          newPosts.forEach((post) => watchedState.posts.push(post));
+        })
+        .catch(() => {
+          watchedState.error = 'networkError';
+        });
+    });
+
+    Promise.all(requests).then(() => setTimeout(checkRSSupdates, 5000));
+  };
 
   setLocale({
     mixed: {
@@ -111,35 +134,6 @@ export default () => {
         watchedState.error = 'invalidRSS';
       });
   });
-
-  const getNewPosts = (html, existingPosts) => {
-    const posts = getPosts(html);
-    const newPosts = [];
-    posts.forEach((post) => {
-      if (!existingPosts.some((p) => p.title === post.title)) {
-        newPosts.push(post);
-      }
-    });
-    return newPosts;
-  };
-
-  const checkRSSupdates = () => {
-    const requests = watchedState.RSSlist.map((rss) => {
-      const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
-      axios.get(proxy)
-        .then((response) => {
-          const xml = response.data.contents;
-          const html = parse(xml);
-          const newPosts = getNewPosts(html, watchedState.posts);
-          newPosts.forEach((post) => watchedState.posts.push(post));
-        })
-        .catch(() => {
-          watchedState.error = 'networkError';
-        });
-    });
-
-    Promise.all(requests).then(() => setTimeout(checkRSSupdates, 5000));
-  };
 
   postModal.addEventListener('show.bs.modal', (event) => {
     const button = event.relatedTarget;
