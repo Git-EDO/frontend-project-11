@@ -75,7 +75,8 @@ export default () => {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        watchedState.formState = 'sending';
+        // watchedState.formState = 'sending';
+        watchedState.formState = 'success';
         const rss = watchedState.inputValue;
         const proxy = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(rss)}`;
         axios.get(proxy)
@@ -87,7 +88,7 @@ export default () => {
                 watchedState.feeds.push(feed);
                 watchedState.posts = [...watchedState.posts, ...posts];
                 watchedState.RSSlist.push(rss);
-                watchedState.formState = 'success';
+                // watchedState.formState = 'success';
             })
             .catch((e) => {
                 watchedState.formState = 'valid';
