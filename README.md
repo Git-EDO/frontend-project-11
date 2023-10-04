@@ -8,6 +8,7 @@
 
 - *Web application for making your own RSS aggregator*
 - *you can use any links containing RSS feed, for example, https://ru.hexlet.io/lessons.rss*
+- *application is looking for any changes in added RSS every 5 seconds*
 - *Form is validating incorrect URL, already added RSS, empty input, URL without RSS feed*
 
 ## Stack
