@@ -17,12 +17,12 @@
 - _**onChange**_
 - _**i18next**_
 
-- ## How to start the project
+## How to start the project
 
 - _**git clone https://github.com/Git-EDO/frontend-project-11.git**_ to copy the repository to your computer
 - _**make install**_ to install all dependencies
 
-- ## How to start the project
+## How to start the project
 
 - application is waiting for new RSS
   ![application's initial state](https://github.com/Git-EDO/frontend-project-11/assets/107861036/120f7e48-5a05-4ef9-aeb8-774eaa18a1cc)
@@ -32,6 +32,10 @@
 
 - RSS validation
   ![validation error](https://github.com/Git-EDO/frontend-project-11/assets/107861036/29854712-20df-4174-833d-6e998d843998)
+  
+- URL validation
+  ![URL validation error](https://github.com/Git-EDO/frontend-project-11/assets/107861036/a9d8ed5a-2401-4ca4-a4ba-d52ea8d82855)
+
 
 
 
