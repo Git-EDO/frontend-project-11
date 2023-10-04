@@ -22,7 +22,7 @@
 - _**git clone https://github.com/Git-EDO/frontend-project-11.git**_ to copy the repository to your computer
 - _**make install**_ to install all dependencies
 
-## How to start the project
+## Functionality
 
 - application is waiting for new RSS
   ![application's initial state](https://github.com/Git-EDO/frontend-project-11/assets/107861036/120f7e48-5a05-4ef9-aeb8-774eaa18a1cc)
