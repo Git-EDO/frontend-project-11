@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/Git-EDO/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/Git-EDO/frontend-project-11/actions)
 <a href="https://codeclimate.com/github/Git-EDO/frontend-project-11/maintainability"><img src="https://api.codeclimate.com/v1/badges/f9451792cbc50ec4d3ea/maintainability" /></a>
 
-# Hexlet@Frontend project №1. "RSS aggregator"
+# Hexlet@Frontend project №3. "RSS aggregator"
 
 ## Description
 
