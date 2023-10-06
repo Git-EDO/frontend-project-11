@@ -113,20 +113,22 @@ export default () => {
     watchedState.form.inputValue = e.target.value;
   });
 
-  const checkRSSupdates = (rssList) => {
-    const requests = rssList.forEach(({ url, feed }) => {
-      const proxy = createProxy(url);
+  const checkRSSupdates = (rssList, feeds) => {
+    const requests = rssList.forEach((rss) => {
+      const proxy = createProxy(rss);
       return axios.get(proxy)
         .then((response) => {
           const xml = response.data.contents;
           const data = parse(xml);
-          const existingPosts = watchedState.RSS.posts.filter((post) => post.feedName === feed);
+          const feed = feeds.find((f) => f.rss === rss);
+          const existingPosts = watchedState.RSS.posts.filter((p) => p.feedName === feed.title);
+          console.log('existing >> ', existingPosts);
           const newPosts = [];
           data.posts.forEach((post) => {
             if (!existingPosts.some((p) => p.title === post.title)) {
               newPosts.push({
                 ...post,
-                feedName: feed,
+                feedName: feed.title,
                 id: uniqueId('post_'),
               });
             }
@@ -138,7 +140,7 @@ export default () => {
         });
     });
 
-    setTimeout(() => checkRSSupdates(rssList), 5000);
+    setTimeout(() => checkRSSupdates(rssList, feeds), 5000);
 
     return requests;
   };
@@ -165,9 +167,9 @@ export default () => {
             }));
             watchedState.RSS.feeds.push({ ...data.feed, id: feedId, rss: data.url });
             watchedState.RSS.posts = [...watchedState.RSS.posts, ...posts];
-            watchedState.RSS.RSSlist.push({ url: data.url, feed: data.feed.title });
+            watchedState.RSS.RSSlist.push(data.url);
             watchedState.form.formState = 'success';
-            checkRSSupdates(watchedState.RSS.RSSlist);
+            checkRSSupdates(watchedState.RSS.RSSlist, watchedState.RSS.feeds);
           })
           .catch((err) => {
             watchedState.form.formState = 'valid';
