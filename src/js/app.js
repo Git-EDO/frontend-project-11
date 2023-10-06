@@ -122,7 +122,6 @@ export default () => {
           const data = parse(xml);
           const feed = feeds.find((f) => f.rss === rss);
           const existingPosts = watchedState.RSS.posts.filter((p) => p.feedName === feed.title);
-          console.log('existing >> ', existingPosts);
           const newPosts = [];
           data.posts.forEach((post) => {
             if (!existingPosts.some((p) => p.title === post.title)) {
