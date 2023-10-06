@@ -1,33 +1,14 @@
-import i18n from './translations';
+export const renderTexts = (i18n, elements) => {
+  elements.h1.textContent = i18n.t('h1');
+  elements.lead.textContent = i18n.t('lead');
+  elements.label.textContent = i18n.t('label');
+  elements.submitBtn.textContent = i18n.t('submitBtn');
+  elements.example.textContent = i18n.t('example');
+  elements.modalPrimaryBtn.textContent = i18n.t('modal.primary');
+  elements.modalSecondaryBtn.textContent = i18n.t('modal.secondary');
+};
 
-const h1 = document.querySelector('h1');
-const lead = document.querySelector('.lead');
-const label = document.querySelector('.form-label');
-const submitBtn = document.querySelector('.btn[type="submit"]');
-const example = document.querySelector('.example-text');
-const form = document.querySelector('form');
-const input = document.getElementById('url-input');
-const feedback = document.querySelector('.feedback');
-const feedsList = document.querySelector('.feeds ul.list-group');
-const postsList = document.querySelector('.posts ul.list-group');
-const feedsTitle = document.querySelector('.feeds .card-title');
-const postsTitle = document.querySelector('.posts .card-title');
-const modalTitle = document.querySelector('#postModal .modal-title');
-const modalBody = document.querySelector('#postModal .modal-body');
-const modalPrimaryBtn = document.querySelector('#postModal .btn-primary');
-const modalSecondaryBtn = document.querySelector('#postModal .btn-secondary');
-
-i18n.init().then((t) => {
-  h1.textContent = t('h1');
-  lead.textContent = t('lead');
-  label.textContent = t('label');
-  submitBtn.textContent = t('submitBtn');
-  example.textContent = t('example');
-  modalPrimaryBtn.textContent = t('modal.primary');
-  modalSecondaryBtn.textContent = t('modal.secondary');
-});
-
-export const changeFormState = (state) => {
+export const changeFormState = (state, i18n, { input, feedback, form }) => {
   switch (state) {
     case 'invalid':
       input.classList.add('is-invalid');
@@ -48,17 +29,17 @@ export const changeFormState = (state) => {
   }
 };
 
-export const showError = (errorKey) => {
+export const showError = (errorKey, i18n, { feedback }) => {
   feedback.textContent = i18n.t(`errors.${errorKey}`);
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
 };
 
-export const hideError = () => {
+export const hideError = ({ feedback }) => {
   feedback.textContent = '';
 };
 
-export const renderFeeds = (feeds) => {
+export const renderFeeds = (feeds, i18n, { feedsList, feedsTitle }) => {
   feedsList.innerHTML = '';
   feedsTitle.textContent = i18n.t('feedsTitle');
   feeds.forEach((feed) => {
@@ -76,27 +57,27 @@ export const renderFeeds = (feeds) => {
   });
 };
 
-export const renderPosts = (posts, visited) => {
+export const renderPosts = (posts, visited, i18n, { postsList, postsTitle }) => {
   postsList.innerHTML = '';
   postsTitle.textContent = i18n.t('postsTitle');
-  posts.forEach((feed) => {
+  posts.forEach((post) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
     const a = document.createElement('a');
-    if (visited.some((p) => p.title === feed.title)) {
+    if (visited.some((p) => p.id === post.id)) {
       a.classList.add('fw-normal', 'link-secondary');
     }
     a.classList.add('fw-bold');
     a.target = '_blank';
     a.rel = 'noopener';
-    a.href = feed.link;
-    a.dataset.id = feed.title;
-    a.textContent = feed.title;
+    a.href = post.link;
+    a.dataset.id = post.id;
+    a.textContent = post.title;
     li.append(a);
     const button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-    button.dataset.id = feed.title;
+    button.dataset.id = post.id;
     button.dataset.bsToggle = 'modal';
     button.dataset.bsTarget = '#postModal';
     button.textContent = i18n.t('btnText');
@@ -105,7 +86,7 @@ export const renderPosts = (posts, visited) => {
   });
 };
 
-export const renderPostInModal = (post) => {
+export const renderPostInModal = (post, { modalTitle, modalBody, modalPrimaryBtn }) => {
   const { title, description, link } = post;
   modalTitle.textContent = title;
   modalBody.textContent = description;
@@ -114,7 +95,7 @@ export const renderPostInModal = (post) => {
 
 export const markPostsAsVisited = (posts) => {
   posts.forEach((post) => {
-    const visited = document.querySelector(`li a[data-id="${post.title}"]`);
+    const visited = document.querySelector(`li a[data-id="${post.id}"]`);
     if (visited) {
       visited.classList.remove('fw-bold');
       visited.classList.add('fw-normal', 'link-secondary');

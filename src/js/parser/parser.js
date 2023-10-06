@@ -1,28 +1,26 @@
-export const getFeed = (data) => {
+const getFeed = (data) => {
   const title = data.querySelector('channel > title').textContent;
   const subtitle = data.querySelector('channel > description').textContent;
   return { title, subtitle };
 };
 
-export const getPosts = (data) => Array.from(data.querySelectorAll('channel item')).map((item) => {
+const getPosts = (data) => Array.from(data.querySelectorAll('channel item')).map((item) => {
   const title = item.querySelector('title').textContent;
   const description = item.querySelector('description').textContent;
   const link = item.querySelector('link').textContent;
-  return { title, description, link };
+  return {
+    title, description, link,
+  };
 });
 
-export const getNewPosts = (html, existingPosts) => {
-  const posts = getPosts(html);
-  const newPosts = [];
-  posts.forEach((post) => {
-    if (!existingPosts.some((p) => p.title === post.title)) {
-      newPosts.push(post);
-    }
-  });
-  return newPosts;
+const parse = (xml, rss) => {
+  const parser = new DOMParser();
+  const data = parser.parseFromString(xml, 'application/xml');
+  const feed = getFeed(data);
+  const posts = getPosts(data);
+  return {
+    feed, posts, url: rss,
+  };
 };
 
-export const parse = (xml) => {
-  const parser = new DOMParser();
-  return parser.parseFromString(xml, 'application/xml');
-};
+export default parse;
