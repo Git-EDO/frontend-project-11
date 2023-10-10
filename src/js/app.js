@@ -161,6 +161,7 @@ export default () => {
           () => {
             watchedState.form.error = '';
             watchedState.form.formState = 'valid';
+            watchedState.loading.status = 'waiting';
             const proxy = createProxy(inputValue);
             axios.get(proxy)
               .then((response) => {

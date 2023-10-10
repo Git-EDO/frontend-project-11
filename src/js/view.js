@@ -11,6 +11,7 @@ export const renderTexts = (i18n, elements) => {
 export const changeFormState = (state, { input }) => {
   switch (state) {
     case 'invalid':
+      input.classList.remove('is-valid');
       input.classList.add('is-invalid');
       break;
     case 'valid':
@@ -38,10 +39,6 @@ export const handleLoadingStatus = (state, i18n, elements) => {
       elements.feedback.classList.add('text-success');
       elements.form.reset();
       elements.input.classList.remove('is-valid');
-      elements.submitBtn.removeAttribute('disabled');
-      break;
-    case 'failed':
-      elements.input.removeAttribute('disabled');
       elements.submitBtn.removeAttribute('disabled');
       break;
     default:
