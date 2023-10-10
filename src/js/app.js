@@ -161,7 +161,6 @@ export default () => {
           () => {
             watchedState.form.error = '';
             watchedState.form.formState = 'valid';
-            watchedState.loading.status = 'waiting';
             const proxy = createProxy(inputValue);
             axios.get(proxy)
               .then((response) => {
@@ -175,6 +174,7 @@ export default () => {
                 }));
                 watchedState.feeds.push({ ...data.feed, id: feedId, url: inputValue });
                 watchedState.posts = [...watchedState.posts, ...posts];
+                watchedState.loading.status = 'waiting';
                 watchedState.loading.status = 'success';
                 checkRSSupdates(watchedState.feeds);
               })
