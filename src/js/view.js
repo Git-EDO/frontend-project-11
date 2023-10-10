@@ -8,7 +8,7 @@ export const renderTexts = (i18n, elements) => {
   elements.modalSecondaryBtn.textContent = i18n.t('modal.secondary');
 };
 
-export const changeFormState = (state, i18n, { input, feedback, form }) => {
+export const changeFormState = (state, { input }) => {
   switch (state) {
     case 'invalid':
       input.classList.add('is-invalid');
@@ -17,15 +17,35 @@ export const changeFormState = (state, i18n, { input, feedback, form }) => {
       input.classList.remove('is-invalid');
       input.classList.add('is-valid');
       break;
-    case 'success':
-      feedback.textContent = i18n.t('successMessage');
-      feedback.classList.remove('text-danger');
-      feedback.classList.add('text-success');
-      form.reset();
-      input.classList.remove('is-valid');
-      break;
     default:
       console.log(`${state} is unsupported form state`);
+  }
+};
+
+export const handleLoadingStatus = (state, i18n, elements) => {
+  switch (state) {
+    case 'waiting':
+      elements.input.removeAttribute('disabled');
+      elements.submitBtn.removeAttribute('disabled');
+      break;
+    case 'loading':
+      elements.input.setAttribute('disabled', 'true');
+      elements.submitBtn.setAttribute('disabled', 'true');
+      break;
+    case 'success':
+      elements.feedback.textContent = i18n.t('successMessage');
+      elements.feedback.classList.remove('text-danger');
+      elements.feedback.classList.add('text-success');
+      elements.form.reset();
+      elements.input.classList.remove('is-valid');
+      elements.submitBtn.removeAttribute('disabled');
+      break;
+    case 'failed':
+      elements.input.removeAttribute('disabled');
+      elements.submitBtn.removeAttribute('disabled');
+      break;
+    default:
+      throw new Error(`${state} is unknown loading status`);
   }
 };
 
