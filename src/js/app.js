@@ -121,7 +121,7 @@ export default () => {
       };
 
       const checkRSSupdates = (feeds) => {
-        feeds.forEach((feed) => {
+        const requests = feeds.map((feed) => {
           const proxy = createProxy(feed.url);
           return axios.get(proxy)
             .then((response) => {
@@ -144,10 +144,11 @@ export default () => {
             })
             .catch(() => {
               watchedState.form.error = 'networkError';
+            })
+            .finally(() => {
+              Promise.all(requests).then(() => setTimeout(() => checkRSSupdates(feeds), 5000));
             });
         });
-
-        setTimeout(() => checkRSSupdates(feeds), 5000);
       };
 
       elements.form.addEventListener('submit', (e) => {
