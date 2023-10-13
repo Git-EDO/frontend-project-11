@@ -40,6 +40,7 @@ export const handleLoadingStatus = (state, i18n, elements) => {
       elements.form.reset();
       elements.input.classList.remove('is-valid');
       elements.submitBtn.removeAttribute('disabled');
+      elements.input.removeAttribute('disabled');
       break;
     default:
       throw new Error(`${state} is unknown loading status`);

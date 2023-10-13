@@ -1,5 +1,5 @@
 develop:
-	webpack serve --mode development
+	npx webpack serve --mode development
 install:
 	npm ci
 

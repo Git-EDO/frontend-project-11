@@ -175,7 +175,6 @@ export default () => {
                 }));
                 watchedState.feeds.push({ ...data.feed, id: feedId, url: inputValue });
                 watchedState.posts = [...watchedState.posts, ...posts];
-                watchedState.loading.status = 'waiting';
                 watchedState.loading.status = 'success';
                 checkRSSupdates(watchedState.feeds);
               })
