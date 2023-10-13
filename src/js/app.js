@@ -120,35 +120,33 @@ export default () => {
           .catch((error) => fail(error));
       };
 
-      const checkRSSupdates = (feeds) => {
-        const requests = feeds.map((feed) => {
-          const proxy = createProxy(feed.url);
-          return axios.get(proxy)
-            .then((response) => {
-              const xml = response.data.contents;
-              const data = parse(xml);
-              const existingFeed = feeds.find((f) => f.url === feed.url);
-              const existingPosts = watchedState.posts
-                .filter((p) => p.feedName === existingFeed.title);
-              const newPosts = [];
-              data.posts.forEach((post) => {
-                if (!existingPosts.some((p) => p.title === post.title)) {
-                  newPosts.push({
-                    ...post,
-                    feedName: existingFeed.title,
-                    id: uniqueId('post_'),
-                  });
-                }
-              });
-              newPosts.forEach((post) => watchedState.posts.push(post));
-            })
-            .catch(() => {
-              watchedState.form.error = 'networkError';
-            })
-            .finally(() => {
-              Promise.all(requests).then(() => setTimeout(() => checkRSSupdates(feeds), 5000));
+      const checkRSSupdates = (url) => {
+        const proxy = createProxy(url);
+        return axios.get(proxy)
+          .then((response) => {
+            const xml = response.data.contents;
+            const data = parse(xml);
+            const existingFeed = watchedState.feeds.find((f) => f.url === url);
+            const existingPosts = watchedState.posts
+              .filter((p) => p.feedName === existingFeed.title);
+            const newPosts = [];
+            data.posts.forEach((post) => {
+              if (!existingPosts.some((p) => p.title === post.title)) {
+                newPosts.push({
+                  ...post,
+                  feedName: existingFeed.title,
+                  id: uniqueId('post_'),
+                });
+              }
             });
-        });
+            newPosts.forEach((post) => watchedState.posts.push(post));
+          })
+          .catch(() => {
+            watchedState.form.error = 'networkError';
+          })
+          .finally(() => {
+            setTimeout(() => checkRSSupdates(url), 5000);
+          });
       };
 
       elements.form.addEventListener('submit', (e) => {
@@ -176,7 +174,7 @@ export default () => {
                 watchedState.feeds.push({ ...data.feed, id: feedId, url: inputValue });
                 watchedState.posts = [...watchedState.posts, ...posts];
                 watchedState.loading.status = 'success';
-                checkRSSupdates(watchedState.feeds);
+                checkRSSupdates(inputValue);
               })
               .catch((err) => {
                 watchedState.loading.status = 'waiting';
